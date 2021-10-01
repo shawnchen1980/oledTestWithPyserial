@@ -141,6 +141,27 @@ class Pyqt5_Serial(QtWidgets.QWidget, Ui_Form):
         else:
             pass
 
+    def send_data(self,input_s):
+        if self.ser.isOpen():
+            if input_s != "":
+                # 非空字符串
+                if True:
+                    # hex发送
+                    input_s = input_s.strip()
+                    send_list = []
+                    while input_s != '':
+                        try:
+                            num = int(input_s[0:2], 16)
+                        except ValueError:
+                            QMessageBox.critical(self, 'wrong data', '请输入十六进制数据，以空格分开!')
+                            return None
+                        input_s = input_s[2:].strip()
+                        send_list.append(num)
+                    input_s = bytes(send_list)
+                num = self.ser.write(input_s)
+        else:
+            pass
+
     # 接收数据
     def data_receive(self):
         try:
@@ -156,7 +177,16 @@ class Pyqt5_Serial(QtWidgets.QWidget, Ui_Form):
                 out_s = ''
                 for i in range(0, len(data)):
                     out_s = out_s + '{:02X}'.format(data[i]) + ' '
-                self.s2__receive_text.insertPlainText(out_s)
+                #self.s2__receive_text.insertPlainText(out_s)
+                self.s2__receive_text.setPlainText(out_s)
+                if(out_s=="58 4A 02 01 01 00 E9 69 EE EE "):#收到查询任务
+                    self.send_data("58 4A 02 00 01 01 01 50 A3 EE EE ")#返回有先前任务
+                if(out_s=="58 4A 02 01 02 01 00 6F 66 EE EE "):#收到继续上次
+                    self.send_data("58 4A 02 00 02 01 00 19 D2 EE EE ")#返回可以工作
+                if(out_s=="58 4A 02 01 02 01 01 7F 47 EE EE "):#收到重新开始
+                    self.send_data("58 4A 02 00 02 01 01 09 F3 EE EE ")#返回无法工作
+                if(out_s=="58 4A 02 01 03 00 8F 0B EE EE "):#收到回家充电
+                    self.send_data("58 4A 02 00 03 01 00 2E E2 EE EE ")#返回可以工作                   
             else:
                 # 串口接收到的字符串为b'123',要转化成unicode字符串才能输出到窗口中去
                 self.s2__receive_text.insertPlainText(data.decode('iso-8859-1'))

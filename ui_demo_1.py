@@ -203,7 +203,7 @@ class Ui_Form(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'SimSun\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">123456</p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">58 4A 02 00 00 00 ED 68 EE EE</p></body></html>"))
         self.s3__send_button.setText(_translate("Form", "发送"))
         self.s3__clear_button.setText(_translate("Form", "清除"))
         self.formGroupBox1.setTitle(_translate("Form", "串口状态"))
